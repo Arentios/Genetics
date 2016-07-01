@@ -21,4 +21,13 @@ public class SequencedGenes {
 		sequencedGenes.add(sequence);
 	}
 	
+	public String toString(){
+		StringBuilder builder = new StringBuilder();
+		for(GeneSequence sequence : sequencedGenes){
+			builder.append(sequence.getSequence());
+			builder.append("\n");		
+		}
+		return builder.toString();
+	}
+	
 }

@@ -1,17 +1,28 @@
 package com.arentios.gene.domain;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class GeneSequence {
 
 	private ArrayList<Character> sequence; //Arraylist instead of String for mutability
 
+	public GeneSequence(){
+		
+	}
+	
 	/**
 	 * Constructor to take in a string and convert it to an array list 
 	 * @param sequenceString
 	 */
 	public GeneSequence(String sequenceString){
-		//this.sequence = new ArrayList<Character>(Arrays.asList(sequenceString.split(regex)))
+		//Can't convert a String directly to an ArrayList since it converts to char and we need Character
+		char[] charArray = sequenceString.toCharArray();	
+		this.sequence = new ArrayList<Character>();
+		for(int i=0;i<charArray.length;i++){
+			this.sequence.add(charArray[i]);
+		}
+	
 	}
 	
 	public ArrayList<Character> getSequence() {
