@@ -64,12 +64,8 @@ public class NeedlemanWunsch {
 		}
 
 		//Now, backtrack to find optimal sequence(s)
-		int i = scoringMatrix.length-1;
-		int j = scoringMatrix[0].length-1;
-		ArrayList<Character> sequenceOne = new ArrayList<Character>();
-		ArrayList<Character> sequenceTwo = new ArrayList<Character>();
-
-		results = backTrack(scoringMatrix, i, j, sequenceOne, sequenceTwo, firstSequence, secondSequence, match, indel, mismatch);
+		//NW always runs from the bottom right of the scoring matrix
+		results = backTrack(scoringMatrix, scoringMatrix.length-1, scoringMatrix[0].length-1, new ArrayList<Character>(), new ArrayList<Character>(), firstSequence, secondSequence, match, indel, mismatch);
 		return results;
 
 	}

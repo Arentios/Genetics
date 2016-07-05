@@ -3,6 +3,7 @@ package com.arentios.gene.domain;
 import java.util.ArrayList;
 
 import com.arentios.gene.sequence.NeedlemanWunsch;
+import com.arentios.gene.sequence.SmithWaterman;
 
 /**
  * Hello world!
@@ -18,6 +19,10 @@ public class App
       //  secondSequence = new GeneSequence(firstSequence);
       //  secondSequence.mutate(10);
         ArrayList<SequenceAlignment> sequencedGenes = NeedlemanWunsch.sequence(firstSequence, secondSequence);
+        for(SequenceAlignment genes : sequencedGenes){
+        	System.out.println(genes);
+        }
+        sequencedGenes = SmithWaterman.sequence(firstSequence, secondSequence);
         for(SequenceAlignment genes : sequencedGenes){
         	System.out.println(genes);
         }
