@@ -1,5 +1,8 @@
 package com.arentios.gene.domain;
 
+
+import java.util.LinkedList;
+
 /**
  * Cell class used in dynamic programming algorithms
  * @author Arentios
@@ -7,34 +10,24 @@ package com.arentios.gene.domain;
  */
 public class Cell {
 
-	private Cell parent;
+	
+	private LinkedList<Cell> parents = null;
 	private Integer score;
-	private String type;
+	private int i;
+	private int j;
 	
 	public Cell(){
-		this.parent = null;
 		this.score = 0;
-		this.setType(null);
 	}
 	
-	public Cell(Integer score){
-		this.parent = null;
+	public Cell(Integer score, int i, int j){
 		this.score = score;
-		this.setType(null);
+		this.i = i;
+		this.j = j;
 	}
 	
-	public Cell(Integer score, Cell parent, String type){
-		this.parent = parent;
-		this.score = score;
-		this.setType(type);
-	}
+
 	
-	public Cell getParent() {
-		return parent;
-	}
-	public void setParent(Cell parent) {
-		this.parent = parent;
-	}
 	public Integer getScore() {
 		return score;
 	}
@@ -42,14 +35,36 @@ public class Cell {
 		this.score = score;
 	}
 
-	public String getType() {
-		return type;
+	public void addParent(Cell parent){
+		if(parents==null){
+			parents = new LinkedList<Cell>();
+		}
+		parents.add(parent);
 	}
 
-	public void setType(String type) {
-		this.type = type;
+	public LinkedList<Cell> getParents() {
+		return parents;
 	}
-	
+
+	public void setParents(LinkedList<Cell> parents) {
+		this.parents = new LinkedList<Cell>(parents);
+	}
+
+	public int getI() {
+		return i;
+	}
+
+	public void setI(int i) {
+		this.i = i;
+	}
+
+	public int getJ() {
+		return j;
+	}
+
+	public void setJ(int j) {
+		this.j = j;
+	}
 	
 	
 }
