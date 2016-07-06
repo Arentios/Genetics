@@ -1,6 +1,7 @@
 package com.arentios.gene.sequence;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.arentios.gene.domain.Cell;
 import com.arentios.gene.domain.GeneSequence;
@@ -51,13 +52,13 @@ public class SmithWaterman {
 				maxScore = Math.max(maxScore, diagonalScore);
 				scoringMatrix[i][j] = new Cell(maxScore, i, j);
 				if(upScore == maxScore){
-					scoringMatrix[i][j].addParent(scoringMatrix[i][j-1], "Up");
+					scoringMatrix[i][j].addParent(scoringMatrix[i][j-1]);
 				}
 				if(leftScore == maxScore){
-					scoringMatrix[i][j].addParent(scoringMatrix[i-1][j], "Left");
+					scoringMatrix[i][j].addParent(scoringMatrix[i-1][j]);
 				}
 				if(diagonalScore == maxScore){
-					scoringMatrix[i][j].addParent(scoringMatrix[i-1][j-1], "Diagonal");
+					scoringMatrix[i][j].addParent(scoringMatrix[i-1][j-1]);
 				}
 				if(maxScore > currMaxScore){
 					currMaxScore = maxScore;
@@ -69,58 +70,66 @@ public class SmithWaterman {
 				}
 			}
 		}
-		
-//		for(int i=0;i<scoringMatrix.length;i++){
-//			for(int j=0;j<scoringMatrix[i].length;j++){
-//				System.out.print(scoringMatrix[i][j].getScore() + " ");
-//			}
-//			System.out.println();
-//		}
+
+		//		for(int i=0;i<scoringMatrix.length;i++){
+		//			for(int j=0;j<scoringMatrix[i].length;j++){
+		//				System.out.print(scoringMatrix[i][j].getScore() + " ");
+		//			}
+		//			System.out.println();
+		//		}
 		for(Cell currCell : maxScores){
-			ArrayList<SequenceAlignment> currAlignments = backTrack(scoringMatrix, currCell.getI(), currCell.getJ(), new ArrayList<Character>(), new ArrayList<Character>(), firstSequence, secondSequence, match, indel, mismatch);
+			ArrayList<SequenceAlignment> currAlignments = backTrack(currCell, new ArrayList<Character>(), new ArrayList<Character>(), firstSequence, secondSequence, match, indel, mismatch);
 			for(SequenceAlignment alignment : currAlignments){
 				results.add(alignment);
 			}
 		}
-		
+
 		return results;
 	}
-	
-	private static ArrayList<SequenceAlignment> backTrack(Cell[][] scoringMatrix, int i, int j, ArrayList<Character> sequenceOne, ArrayList<Character> sequenceTwo, ArrayList<Character> firstSequence, ArrayList<Character> secondSequence, Integer match, Integer indel, Integer mismatch){
-		ArrayList<SequenceAlignment> results = new ArrayList<SequenceAlignment>();
-		
-		while(scoringMatrix[i][j].getScore() != 0){
-			//System.out.println(i + " " + j);
-			//Can only match if not in the first row or column
-			//TODO: Because we're not handling multiple optimal alignments, match/mismatch paths are always prioritized and indels being in the second sequence are more often inserted mid-sequence
-			if(i > 0 && j > 0 && (((scoringMatrix[i][j].getScore() - match) == scoringMatrix[i-1][j-1].getScore()) || ((scoringMatrix[i][j].getScore() - mismatch) == scoringMatrix[i-1][j-1].getScore()))){
-				sequenceOne.add(0,firstSequence.get(i-1));
-				sequenceTwo.add(0,secondSequence.get(j-1));
-				i = i-1;
-				j = j-1;
-			}
-			//Likewise can only move left if not in the first column
-			else if(i > 0 && (scoringMatrix[i][j].getScore() - indel) == scoringMatrix[i-1][j].getScore()){
-				sequenceOne.add(0,firstSequence.get(i-1));
-				sequenceTwo.add(0,'-');
-				i = i-1;
-			}
-			//No need for a check here since we know the matrix was generated successfully so SOME move is valid
-			else{
-				sequenceOne.add(0,'-');
-				sequenceTwo.add(0,secondSequence.get(j-1));
-				j = j-1;
+
+	private static ArrayList<SequenceAlignment> backTrack(Cell currCell, ArrayList<Character> sequenceOne, ArrayList<Character> sequenceTwo, ArrayList<Character> firstSequence, ArrayList<Character> secondSequence, Integer match, Integer indel, Integer mismatch){
+		ArrayList<SequenceAlignment> results = new ArrayList<SequenceAlignment>();	
+		LinkedList<Cell> parents = currCell.getParents();
+		if(parents != null){
+			for(Cell parent: parents){
+				ArrayList<Character> newSequenceOne = new ArrayList<Character>(sequenceOne);
+				ArrayList<Character> newSequenceTwo = new ArrayList<Character>(sequenceTwo);
+				//Need to figure out which character to add to each sequence
+				if(parent.getI() != currCell.getI()){
+					//Diagonal movement
+					if(parent.getJ() != currCell.getJ()){
+						newSequenceOne.add(0,firstSequence.get(parent.getI()));
+						newSequenceTwo.add(0,secondSequence.get(parent.getJ()));
+					}
+					//Leftwards movement
+					else{
+						newSequenceOne.add(0,firstSequence.get(parent.getI()));
+						newSequenceTwo.add(0,'-');
+					}
+				}
+				//Upwards movement by default
+				else{
+					newSequenceOne.add(0,'-');
+					newSequenceTwo.add(0,secondSequence.get(parent.getJ()));
+				}
+				ArrayList<SequenceAlignment> subResults = backTrack(parent, newSequenceOne, newSequenceTwo, firstSequence, secondSequence, match, indel, mismatch);
+				for(SequenceAlignment alignment : subResults){
+					results.add(alignment);
+				}
 			}
 		}
-		SequenceAlignment sequencedPair = new SequenceAlignment();
-		GeneSequence resultSequence = new GeneSequence();
-		resultSequence.setSequence(sequenceOne);
-		sequencedPair.addSequence(resultSequence);
-		resultSequence = new GeneSequence();
-		resultSequence.setSequence(sequenceTwo);
-		sequencedPair.addSequence(resultSequence);
-		results.add(sequencedPair);
+		//If there are no parents we're at the terminus
+		else{
 
+			SequenceAlignment sequencedPair = new SequenceAlignment();
+			GeneSequence resultSequence = new GeneSequence();
+			resultSequence.setSequence(sequenceOne);
+			sequencedPair.addSequence(resultSequence);
+			resultSequence = new GeneSequence();
+			resultSequence.setSequence(sequenceTwo);
+			sequencedPair.addSequence(resultSequence);
+			results.add(sequencedPair);
+		}
 		return results;
 	}
 

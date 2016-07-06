@@ -1,6 +1,7 @@
 package com.arentios.gene.domain;
 
-import java.util.HashMap;
+
+import java.util.LinkedList;
 
 /**
  * Cell class used in dynamic programming algorithms
@@ -9,8 +10,8 @@ import java.util.HashMap;
  */
 public class Cell {
 
-	//Parents are a hash of direction to cell, there will never be multiple pointers in the same direction so a hash is okay
-	private HashMap<String, Cell> parents;
+	
+	private LinkedList<Cell> parents = null;
 	private Integer score;
 	private int i;
 	private int j;
@@ -34,19 +35,19 @@ public class Cell {
 		this.score = score;
 	}
 
-	public void addParent(Cell parent, String direction){
+	public void addParent(Cell parent){
 		if(parents==null){
-			parents = new HashMap<String, Cell>();
+			parents = new LinkedList<Cell>();
 		}
-		parents.put(direction,parent);
+		parents.add(parent);
 	}
 
-	public HashMap<String, Cell> getParents() {
+	public LinkedList<Cell> getParents() {
 		return parents;
 	}
 
-	public void setParents(HashMap<String, Cell> parents) {
-		this.parents = parents;
+	public void setParents(LinkedList<Cell> parents) {
+		this.parents = new LinkedList<Cell>(parents);
 	}
 
 	public int getI() {
