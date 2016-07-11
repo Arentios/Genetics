@@ -25,9 +25,9 @@ public class App
       //  firstSequence = new GeneSequence("CGTGAATTCAT");
       //  secondSequence = new GeneSequence("GACTTAC");
 
-        sequencedGenes = SmithWaterman.sequence(firstSequence, secondSequence);
-        for(SequenceAlignment genes : sequencedGenes){
-        	System.out.println(genes);
-        }
+      //  sequencedGenes = SmithWaterman.sequence(firstSequence, secondSequence);
+      //  for(SequenceAlignment genes : sequencedGenes){
+      //  	System.out.println(genes);
+      //  }
     }
 }

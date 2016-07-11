@@ -13,7 +13,7 @@ import com.arentios.gene.domain.SequenceAlignment;
  *
  */
 public class DynamicProgrammingSequencer {
-	
+
 	/**
 	 * Backtrack from a given cell accumulating sequences based on it's parents
 	 * Used by both Needleman-Wunsch and Smith-Waterman
@@ -33,46 +33,73 @@ public class DynamicProgrammingSequencer {
 	protected static ArrayList<SequenceAlignment> backTrack(Cell currCell, ArrayList<Character> sequenceOne, ArrayList<Character> sequenceTwo, ArrayList<Character> firstSequence, ArrayList<Character> secondSequence, Integer match, Integer indel, Integer mismatch){
 		ArrayList<SequenceAlignment> results = new ArrayList<SequenceAlignment>();	
 		LinkedList<Cell> parents = currCell.getParents();
-		if(parents != null){
-			for(Cell parent: parents){
-				ArrayList<Character> newSequenceOne = new ArrayList<Character>(sequenceOne);
-				ArrayList<Character> newSequenceTwo = new ArrayList<Character>(sequenceTwo);
-				//Need to figure out which character to add to each sequence
+		while(parents != null){
+			//Multiple parents, will need to branch and recur
+			if(parents.size() > 1){
+				for(Cell parent: parents){
+					ArrayList<Character> newSequenceOne = new ArrayList<Character>(sequenceOne);
+					ArrayList<Character> newSequenceTwo = new ArrayList<Character>(sequenceTwo);
+					//Need to figure out which character to add to each sequence
+					if(parent.getI() != currCell.getI()){
+						//Diagonal movement
+						if(parent.getJ() != currCell.getJ()){
+							newSequenceOne.add(0,firstSequence.get(parent.getI()));
+							newSequenceTwo.add(0,secondSequence.get(parent.getJ()));
+						}
+						//Leftwards movement
+						else{
+							newSequenceOne.add(0,firstSequence.get(parent.getI()));
+							newSequenceTwo.add(0,'-');
+						}
+					}
+					//Upwards movement by default
+					else{
+						newSequenceOne.add(0,'-');
+						newSequenceTwo.add(0,secondSequence.get(parent.getJ()));
+					}
+					ArrayList<SequenceAlignment> subResults = backTrack(parent, newSequenceOne, newSequenceTwo, firstSequence, secondSequence, match, indel, mismatch);
+					for(SequenceAlignment alignment : subResults){
+						results.add(alignment);
+					}
+				}
+				break;
+			}
+			//Only one parent, just keep on going without recurring
+			else{
+				Cell parent = parents.getFirst();
 				if(parent.getI() != currCell.getI()){
 					//Diagonal movement
 					if(parent.getJ() != currCell.getJ()){
-						newSequenceOne.add(0,firstSequence.get(parent.getI()));
-						newSequenceTwo.add(0,secondSequence.get(parent.getJ()));
+						sequenceOne.add(0,firstSequence.get(parent.getI()));
+						sequenceTwo.add(0,secondSequence.get(parent.getJ()));
 					}
 					//Leftwards movement
 					else{
-						newSequenceOne.add(0,firstSequence.get(parent.getI()));
-						newSequenceTwo.add(0,'-');
+						sequenceOne.add(0,firstSequence.get(parent.getI()));
+						sequenceTwo.add(0,'-');
 					}
 				}
 				//Upwards movement by default
 				else{
-					newSequenceOne.add(0,'-');
-					newSequenceTwo.add(0,secondSequence.get(parent.getJ()));
+					sequenceOne.add(0,'-');
+					sequenceTwo.add(0,secondSequence.get(parent.getJ()));
 				}
-				ArrayList<SequenceAlignment> subResults = backTrack(parent, newSequenceOne, newSequenceTwo, firstSequence, secondSequence, match, indel, mismatch);
-				for(SequenceAlignment alignment : subResults){
-					results.add(alignment);
-				}
+				currCell = parent;
+				parents = currCell.getParents();
+
 			}
 		}
 		//If there are no parents we're at the terminus
-		else{
 
-			SequenceAlignment sequencedPair = new SequenceAlignment();
-			GeneSequence resultSequence = new GeneSequence();
-			resultSequence.setSequence(sequenceOne);
-			sequencedPair.addSequence(resultSequence);
-			resultSequence = new GeneSequence();
-			resultSequence.setSequence(sequenceTwo);
-			sequencedPair.addSequence(resultSequence);
-			results.add(sequencedPair);
-		}
+		SequenceAlignment sequencedPair = new SequenceAlignment();
+		GeneSequence resultSequence = new GeneSequence();
+		resultSequence.setSequence(sequenceOne);
+		sequencedPair.addSequence(resultSequence);
+		resultSequence = new GeneSequence();
+		resultSequence.setSequence(sequenceTwo);
+		sequencedPair.addSequence(resultSequence);
+		results.add(sequencedPair);
+
 		return results;
 	}
 }
