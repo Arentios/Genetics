@@ -50,14 +50,17 @@ public class SmithWaterman extends DynamicProgrammingSequencer {
 				int maxScore = Math.max(upScore, leftScore);
 				maxScore = Math.max(maxScore, diagonalScore);
 				scoringMatrix[i][j] = new Cell(maxScore, i, j);
-				if(upScore == maxScore){
-					scoringMatrix[i][j].addParent(scoringMatrix[i][j-1]);
-				}
-				if(leftScore == maxScore){
-					scoringMatrix[i][j].addParent(scoringMatrix[i-1][j]);
-				}
-				if(diagonalScore == maxScore){
-					scoringMatrix[i][j].addParent(scoringMatrix[i-1][j-1]);
+				//Only add parents if max score is above zero since that's the termination condition
+				if(maxScore > 0){
+					if(upScore == maxScore){
+						scoringMatrix[i][j].addParent(scoringMatrix[i][j-1]);
+					}
+					if(leftScore == maxScore){
+						scoringMatrix[i][j].addParent(scoringMatrix[i-1][j]);
+					}
+					if(diagonalScore == maxScore){
+						scoringMatrix[i][j].addParent(scoringMatrix[i-1][j-1]);
+					}
 				}
 				if(maxScore > currMaxScore){
 					currMaxScore = maxScore;
