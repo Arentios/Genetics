@@ -62,7 +62,7 @@ public class DynamicProgrammingSequencer {
 						results.add(alignment);
 					}
 				}
-				break;
+				break; //XXX: Is there a better way to do this?
 			}
 			//Only one parent, just keep on going without recurring
 			else{
@@ -90,15 +90,17 @@ public class DynamicProgrammingSequencer {
 			}
 		}
 		//If there are no parents we're at the terminus
-
-		SequenceAlignment sequencedPair = new SequenceAlignment();
-		GeneSequence resultSequence = new GeneSequence();
-		resultSequence.setSequence(sequenceOne);
-		sequencedPair.addSequence(resultSequence);
-		resultSequence = new GeneSequence();
-		resultSequence.setSequence(sequenceTwo);
-		sequencedPair.addSequence(resultSequence);
-		results.add(sequencedPair);
+		//Bug Fix 7/13/2016 EM: Need to not add stub of sequence if we've broken out of a split
+		if(parents == null){
+			SequenceAlignment sequencedPair = new SequenceAlignment();
+			GeneSequence resultSequence = new GeneSequence();
+			resultSequence.setSequence(sequenceOne);
+			sequencedPair.addSequence(resultSequence);
+			resultSequence = new GeneSequence();
+			resultSequence.setSequence(sequenceTwo);
+			sequencedPair.addSequence(resultSequence);
+			results.add(sequencedPair);
+		}
 
 		return results;
 	}

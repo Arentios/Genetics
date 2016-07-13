@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.arentios.gene.domain.GeneSequence;
 import com.arentios.gene.domain.SequenceAlignment;
 import com.arentios.gene.sequence.NeedlemanWunsch;
+import com.arentios.gene.sequence.SmithWaterman;
 
 /**
  * Controller for RESTful services accessing person data
@@ -45,6 +46,25 @@ public class AlignmentController {
 			LOGGER.error("Failed to RESTfully run Needleman-Wunsch");
 			LOGGER.error(e.getMessage());
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Failed to run Needleman-Wunsch");
+		}
+		
+	}
+	
+	@RequestMapping(value = "/smithwaterman/{sequenceOne}/{sequenceTwo}", method = RequestMethod.GET)
+	public ResponseEntity<String> smithWaterman(@PathVariable String sequenceOne, @PathVariable String sequenceTwo){
+		LOGGER.info("Attempting to run Smith-Waterman with default scoring on "+sequenceOne+" and " + sequenceTwo);
+		try{
+			ArrayList<SequenceAlignment> alignments = SmithWaterman.sequence(new GeneSequence(sequenceOne), new GeneSequence(sequenceTwo));
+			StringBuffer results = new StringBuffer();
+			for(SequenceAlignment alignment : alignments){
+				results.append(alignment);
+			}
+			return ResponseEntity.status(HttpStatus.OK).body(results.toString());
+		}
+		catch(Exception e){
+			LOGGER.error("Failed to RESTfully run Smith-Waterman");
+			LOGGER.error(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Failed to run Smith-Waterman");
 		}
 		
 	}
