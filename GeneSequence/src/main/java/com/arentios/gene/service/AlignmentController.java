@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.arentios.gene.domain.GeneSequence;
+import com.arentios.gene.domain.Sequence;
 import com.arentios.gene.domain.SequenceAlignment;
 import com.arentios.gene.sequence.NeedlemanWunsch;
 import com.arentios.gene.sequence.SmithWaterman;
@@ -35,7 +35,7 @@ public class AlignmentController {
 	public ResponseEntity<String> needlemanWunsch(@PathVariable String sequenceOne, @PathVariable String sequenceTwo){
 		LOGGER.info("Attempting to run Needleman-Wunsch with default scoring on "+sequenceOne+" and " + sequenceTwo);
 		try{
-			ArrayList<SequenceAlignment> alignments = NeedlemanWunsch.sequence(new GeneSequence(sequenceOne), new GeneSequence(sequenceTwo));
+			ArrayList<SequenceAlignment> alignments = NeedlemanWunsch.sequence(new Sequence(sequenceOne), new Sequence(sequenceTwo));
 			StringBuffer results = new StringBuffer();
 			for(SequenceAlignment alignment : alignments){
 				results.append(alignment);
@@ -54,7 +54,7 @@ public class AlignmentController {
 	public ResponseEntity<String> smithWaterman(@PathVariable String sequenceOne, @PathVariable String sequenceTwo){
 		LOGGER.info("Attempting to run Smith-Waterman with default scoring on "+sequenceOne+" and " + sequenceTwo);
 		try{
-			ArrayList<SequenceAlignment> alignments = SmithWaterman.sequence(new GeneSequence(sequenceOne), new GeneSequence(sequenceTwo));
+			ArrayList<SequenceAlignment> alignments = SmithWaterman.sequence(new Sequence(sequenceOne), new Sequence(sequenceTwo));
 			StringBuffer results = new StringBuffer();
 			for(SequenceAlignment alignment : alignments){
 				results.append(alignment);

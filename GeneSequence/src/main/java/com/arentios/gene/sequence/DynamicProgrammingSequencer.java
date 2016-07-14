@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.LinkedList;
 
 import com.arentios.gene.domain.Cell;
-import com.arentios.gene.domain.GeneSequence;
+import com.arentios.gene.domain.Sequence;
 import com.arentios.gene.domain.SequenceAlignment;
 
 /**
@@ -93,10 +93,10 @@ public class DynamicProgrammingSequencer {
 		//Bug Fix 7/13/2016 EM: Need to not add stub of sequence if we've broken out of a split
 		if(parents == null){
 			SequenceAlignment sequencedPair = new SequenceAlignment();
-			GeneSequence resultSequence = new GeneSequence();
+			Sequence resultSequence = new Sequence();
 			resultSequence.setSequence(sequenceOne);
 			sequencedPair.addSequence(resultSequence);
-			resultSequence = new GeneSequence();
+			resultSequence = new Sequence();
 			resultSequence.setSequence(sequenceTwo);
 			sequencedPair.addSequence(resultSequence);
 			results.add(sequencedPair);

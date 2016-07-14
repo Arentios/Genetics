@@ -3,7 +3,7 @@ package com.arentios.gene.sequence;
 import java.util.ArrayList;
 
 import com.arentios.gene.domain.Cell;
-import com.arentios.gene.domain.GeneSequence;
+import com.arentios.gene.domain.Sequence;
 import com.arentios.gene.domain.SequenceAlignment;
 
 public class SmithWaterman extends DynamicProgrammingSequencer {
@@ -12,7 +12,7 @@ public class SmithWaterman extends DynamicProgrammingSequencer {
 
 	}
 
-	public static ArrayList<SequenceAlignment> sequence(GeneSequence firstSequence, GeneSequence secondSequence){
+	public static ArrayList<SequenceAlignment> sequence(Sequence firstSequence, Sequence secondSequence){
 		return sequence(firstSequence, secondSequence, SequenceConstants.SMITH_WATERMAN_MATCH_DEFAULT, SequenceConstants.SMITH_WATERMAN_INDEL_DEFAULT, SequenceConstants.SMITH_WATERMAN_MISMATCH_DEFAULT);
 	}
 
@@ -25,7 +25,7 @@ public class SmithWaterman extends DynamicProgrammingSequencer {
 	 * @param mismatch
 	 * @return
 	 */
-	public static ArrayList<SequenceAlignment> sequence(GeneSequence firstGeneSequence, GeneSequence secondGeneSequence, Integer match, Integer indel, Integer mismatch){
+	public static ArrayList<SequenceAlignment> sequence(Sequence firstGeneSequence, Sequence secondGeneSequence, Integer match, Integer indel, Integer mismatch){
 		ArrayList<SequenceAlignment> results = new ArrayList<SequenceAlignment>();
 		ArrayList<Character> firstSequence = firstGeneSequence.getSequence();
 		ArrayList<Character> secondSequence = secondGeneSequence.getSequence();
@@ -50,14 +50,17 @@ public class SmithWaterman extends DynamicProgrammingSequencer {
 				int maxScore = Math.max(upScore, leftScore);
 				maxScore = Math.max(maxScore, diagonalScore);
 				scoringMatrix[i][j] = new Cell(maxScore, i, j);
-				if(upScore == maxScore){
-					scoringMatrix[i][j].addParent(scoringMatrix[i][j-1]);
-				}
-				if(leftScore == maxScore){
-					scoringMatrix[i][j].addParent(scoringMatrix[i-1][j]);
-				}
-				if(diagonalScore == maxScore){
-					scoringMatrix[i][j].addParent(scoringMatrix[i-1][j-1]);
+				//Only add parents if max score is above zero since that's the termination condition
+				if(maxScore > 0){
+					if(upScore == maxScore){
+						scoringMatrix[i][j].addParent(scoringMatrix[i][j-1]);
+					}
+					if(leftScore == maxScore){
+						scoringMatrix[i][j].addParent(scoringMatrix[i-1][j]);
+					}
+					if(diagonalScore == maxScore){
+						scoringMatrix[i][j].addParent(scoringMatrix[i-1][j-1]);
+					}
 				}
 				if(maxScore > currMaxScore){
 					currMaxScore = maxScore;
