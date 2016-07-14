@@ -1,6 +1,7 @@
-package com.arentios.gene.sequence;
+package com.arentios.gene.genesequence;
 
-public class SequenceConstants {
+public class TestConstants {
+
 
 	public static final Integer NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT = 0;
 	public static final Integer NEEDLEMAN_WUNSCH_MATCH_DEFAULT = 1;

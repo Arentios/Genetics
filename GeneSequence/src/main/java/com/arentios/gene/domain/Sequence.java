@@ -1,38 +1,40 @@
 package com.arentios.gene.domain;
 
+//7/14/2016 EM renamed from GeneSequence to Sequence due to the more generic
+//Removed mutate/random functionality because they were novel for testing but were extraneous long term
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Random;
 
-public class GeneSequence {
+public class Sequence {
 
 	private ArrayList<Character> sequence; //Arraylist instead of String for mutability
 
 	private static final Character[] nucleotides = new Character[]{ 'U', 'T', 'C', 'A'};
-	
-	public GeneSequence(){
-		
+
+	public Sequence(){
+
 	}
-	
+
 	/**
 	 * Constructor to take in a string and convert it to an array list 
 	 * @param sequenceString
 	 */
-	public GeneSequence(String sequenceString){
+	public Sequence(String sequenceString){
 		//Can't convert a String directly to an ArrayList since it converts to char and we need Character
 		char[] charArray = sequenceString.toCharArray();	
 		this.sequence = new ArrayList<Character>();
 		for(int i=0;i<charArray.length;i++){
 			this.sequence.add(charArray[i]);
 		}
-	
+
 	}
-	
+
 	/**
 	 * Copy constructor
 	 * @param firstSequence
 	 */
-	public GeneSequence(GeneSequence firstSequence) {
+	public Sequence(Sequence firstSequence) {
 		this.sequence = new ArrayList<Character>(firstSequence.getSequence());
 	}
 
@@ -43,29 +45,26 @@ public class GeneSequence {
 	public void setSequence(ArrayList<Character> sequence) {
 		this.sequence = new ArrayList<Character>(sequence); //Make a new copy instead of keeping a reference
 	}
-	
-	/**
-	 * Generate a random gene sequence of a given length
-	 * @param length
-	 */
-	public void randomize(int length){
-		sequence = new ArrayList<Character>(length);
-		for(int i=0;i<length;i++){
-			sequence.add(nucleotides[new Random().nextInt(nucleotides.length)]);
+
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Sequence other = (Sequence) obj;
+		if (sequence == null) {
+			if (other.sequence != null)
+				return false;
+		} else if(sequence.containsAll(other.sequence) && other.sequence.containsAll(sequence) && (sequence.size()==other.sequence.size())){
+			return true;
 		}
+		return false;
 	}
-	
-	/**
-	 * Alter a gene sequence by randomly altering each nucleotide with a given chance
-	 * @param chance
-	 */
-	public void mutate(int chance){
-		for(int i=0;i<sequence.size();i++){
-			if(new Random().nextInt(100) < chance){
-				sequence.set(i, nucleotides[new Random().nextInt(nucleotides.length)]);
-			}	
-		}
-	}
-	
-	
+
+
+
 }

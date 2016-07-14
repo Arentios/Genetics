@@ -3,7 +3,7 @@ package com.arentios.gene.sequence;
 import java.util.ArrayList;
 
 import com.arentios.gene.domain.Cell;
-import com.arentios.gene.domain.GeneSequence;
+import com.arentios.gene.domain.Sequence;
 import com.arentios.gene.domain.SequenceAlignment;
 
 /**
@@ -18,7 +18,7 @@ public class NeedlemanWunsch extends DynamicProgrammingSequencer {
 
 	}
 
-	public static ArrayList<SequenceAlignment> sequence(GeneSequence firstSequence, GeneSequence secondSequence){
+	public static ArrayList<SequenceAlignment> sequence(Sequence firstSequence, Sequence secondSequence){
 		return sequence(firstSequence, secondSequence, SequenceConstants.NEEDLEMAN_WUNSCH_MATCH_DEFAULT, SequenceConstants.NEEDLEMAN_WUNSCH_INDEL_DEFAULT, SequenceConstants.NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT);
 	}
 
@@ -35,7 +35,7 @@ public class NeedlemanWunsch extends DynamicProgrammingSequencer {
 	 * @param mismatch
 	 * @return
 	 */
-	public static ArrayList<SequenceAlignment> sequence(GeneSequence firstGeneSequence, GeneSequence secondGeneSequence, Integer match, Integer indel, Integer mismatch){
+	public static ArrayList<SequenceAlignment> sequence(Sequence firstGeneSequence, Sequence secondGeneSequence, Integer match, Integer indel, Integer mismatch){
 		ArrayList<SequenceAlignment> results = new ArrayList<SequenceAlignment>();
 		ArrayList<Character> firstSequence = firstGeneSequence.getSequence();
 		ArrayList<Character> secondSequence = secondGeneSequence.getSequence();
