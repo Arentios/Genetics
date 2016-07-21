@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -17,6 +18,7 @@ import com.arentios.gene.domain.Sequence;
 import com.arentios.gene.domain.SequenceAlignment;
 import com.arentios.gene.sequence.NeedlemanWunsch;
 import com.arentios.gene.sequence.SmithWaterman;
+import com.arentios.gene.service.domain.AlignmentRequest;
 
 /**
  * Controller for RESTful services accessing person data
@@ -67,7 +69,48 @@ public class AlignmentController {
 			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Failed to run Smith-Waterman");
 		}
 		
+		
+		
 	}
+	
+
+	@RequestMapping(value = "/", method = RequestMethod.POST)
+	public ResponseEntity<String> RequestAlignment(@RequestBody AlignmentRequest request){
+		LOGGER.info("Attempting to process alignment request");
+		try{
+			if(request.getRequestType().equalsIgnoreCase("Needleman-Wunsch")){
+				if(request.getSequences().length != 2){
+					return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Need exactly two sequences to run Needleman-Wunsch");
+				}
+				LOGGER.info("Attempting to process Needleman-Wunsch post request with sequences="+request.getSequences()[0]+","+request.getSequences()[1]);
+				ArrayList<SequenceAlignment> alignments = NeedlemanWunsch.sequence(new Sequence(request.getSequences()[0]), new Sequence(request.getSequences()[1]));
+				StringBuffer results = new StringBuffer();
+				for(SequenceAlignment alignment : alignments){
+					results.append(alignment);
+				}
+				return ResponseEntity.status(HttpStatus.OK).body(results.toString());
+			}
+			else if(request.getRequestType().equalsIgnoreCase("Smith-Waterman")){
+				if(request.getSequences().length != 2){
+					return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Need exactly two sequences to run Smith-Waterman");
+				}
+				ArrayList<SequenceAlignment> alignments = SmithWaterman.sequence(new Sequence(request.getSequences()[0]), new Sequence(request.getSequences()[1]));
+				StringBuffer results = new StringBuffer();
+				for(SequenceAlignment alignment : alignments){
+					results.append(alignment);
+				}
+				return ResponseEntity.status(HttpStatus.OK).body(results.toString());
+			}
+			else return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Unknown alignment request type");			
+		}
+		catch(Exception e){
+			LOGGER.error("Failed to RESTfully run request alignment");
+			LOGGER.error(e.getMessage());
+			return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Failed to run request alignment");
+		}
+		
+	}
+	
 	
 	
 }
