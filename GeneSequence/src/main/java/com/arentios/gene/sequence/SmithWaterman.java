@@ -6,12 +6,19 @@ import com.arentios.gene.domain.Cell;
 import com.arentios.gene.domain.Sequence;
 import com.arentios.gene.domain.SequenceAlignment;
 
+/**
+ * Class to implement Smith-Waterman algorithm for local sequence alignment
+ * @author Arentios
+ *
+ */
 public class SmithWaterman extends DynamicProgrammingSequencer {
 
-	static{
-
-	}
-
+	/**
+	 * Wrapper to pass default values to sequencing function
+	 * @param firstSequence
+	 * @param secondSequence
+	 * @return
+	 */
 	public static ArrayList<SequenceAlignment> sequence(Sequence firstSequence, Sequence secondSequence){
 		return sequence(firstSequence, secondSequence, SequenceConstants.SMITH_WATERMAN_MATCH_DEFAULT, SequenceConstants.SMITH_WATERMAN_INDEL_DEFAULT, SequenceConstants.SMITH_WATERMAN_MISMATCH_DEFAULT);
 	}

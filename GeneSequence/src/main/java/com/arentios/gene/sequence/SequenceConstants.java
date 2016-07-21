@@ -10,8 +10,5 @@ public class SequenceConstants {
 	public static final Integer SMITH_WATERMAN_MATCH_DEFAULT = 2;
 	public static final Integer SMITH_WATERMAN_INDEL_DEFAULT = -1;
 	
-	static{
-		
-	}
 	
 }

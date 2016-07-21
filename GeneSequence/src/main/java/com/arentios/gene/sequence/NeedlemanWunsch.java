@@ -12,12 +12,13 @@ import com.arentios.gene.domain.SequenceAlignment;
  *
  */
 public class NeedlemanWunsch extends DynamicProgrammingSequencer {
-
-
-	static{
-
-	}
-
+	
+	/**
+	 * Wrapper to pass default values to sequencing function
+	 * @param firstSequence
+	 * @param secondSequence
+	 * @return
+	 */
 	public static ArrayList<SequenceAlignment> sequence(Sequence firstSequence, Sequence secondSequence){
 		return sequence(firstSequence, secondSequence, SequenceConstants.NEEDLEMAN_WUNSCH_MATCH_DEFAULT, SequenceConstants.NEEDLEMAN_WUNSCH_INDEL_DEFAULT, SequenceConstants.NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT);
 	}

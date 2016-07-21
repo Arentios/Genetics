@@ -1,5 +1,10 @@
 package com.arentios.gene.service.domain;
 
+/**
+ * Class for JSON deserialization to contain a request for sequence alignment
+ * @author Arentios
+ *
+ */
 public class AlignmentRequest {
 
 	private String requestType;
