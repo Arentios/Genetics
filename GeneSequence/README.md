@@ -6,7 +6,7 @@ Current limitations cause the JVM to fail eventually. At default settings this h
 
 Currently looking at changes to the code to increase the threshold of failure, but this is not a high priority.
 
-NYI: Matching more than two sequences at a time. This is a major problem in the bioinformatics industry and primarily revolves around heuristic based work rather than something completely determinative like the dynamic programming solutions used for two sequences.
+NYI: Matching more than two sequences at a time. This is a major problem in the bioinformatics industry and primarily revolves around heuristic based work rather than something completely algorithmic like the dynamic programming solutions used for two sequences.
 
 Sample service calls, assuming running locally on port 8080
 
