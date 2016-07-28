@@ -1,6 +1,7 @@
 package com.arentios.gene.sequence;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.arentios.gene.domain.Cell;
 import com.arentios.gene.domain.Sequence;
@@ -80,18 +81,15 @@ public class SmithWaterman extends DynamicProgrammingSequencer {
 			}
 		}
 
-		//		for(int i=0;i<scoringMatrix.length;i++){
-		//			for(int j=0;j<scoringMatrix[i].length;j++){
-		//				System.out.print(scoringMatrix[i][j].getScore() + " ");
-		//			}
-		//			System.out.println();
-		//		}
+		/*
 		for(Cell currCell : maxScores){
 			ArrayList<SequenceAlignment> currAlignments = backTrack(currCell, new ArrayList<Character>(), new ArrayList<Character>(), firstSequence, secondSequence, match, indel, mismatch);
 			for(SequenceAlignment alignment : currAlignments){
 				results.add(alignment);
 			}
 		}
+		*/
+		results = backTrack(new LinkedList<Cell>(maxScores), firstSequence, secondSequence, match, indel, mismatch);
 
 		return results;
 	}

@@ -1,6 +1,7 @@
 package com.arentios.gene.sequence;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 
 import com.arentios.gene.domain.Cell;
 import com.arentios.gene.domain.Sequence;
@@ -82,7 +83,9 @@ public class NeedlemanWunsch extends DynamicProgrammingSequencer {
 		//		}
 		//Now, backtrack to find optimal sequence(s)
 		//NW always runs from the bottom right of the scoring matrix
-		results = backTrack(scoringMatrix[scoringMatrix.length-1][scoringMatrix[0].length-1], new ArrayList<Character>(), new ArrayList<Character>(), firstSequence, secondSequence, match, indel, mismatch);
+		LinkedList<Cell> startCell = new LinkedList<Cell>();
+		startCell.add(scoringMatrix[scoringMatrix.length-1][scoringMatrix[0].length-1]);
+		results = backTrack(startCell, firstSequence, secondSequence, match, indel, mismatch);
 		return results;
 
 	}
