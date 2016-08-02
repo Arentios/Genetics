@@ -1,6 +1,6 @@
 package com.arentios.gene.domain;
 
-//7/14/2016 EM renamed from GeneSequence to Sequence due to the more generic
+//7/14/2016 EM renamed from GeneSequence to Sequence due to the more generic use case
 //Removed mutate/random functionality because they were novel for testing but were extraneous long term
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,9 +8,7 @@ import java.util.Random;
 
 public class Sequence {
 
-	private ArrayList<Character> sequence; //Arraylist instead of String for mutability
-
-	private static final Character[] nucleotides = new Character[]{ 'U', 'T', 'C', 'A'};
+	private ArrayList<Character> sequence; //Arraylist instead of String for mutability and better index access
 
 	public Sequence(){
 
@@ -64,6 +62,7 @@ public class Sequence {
 		}
 		return false;
 	}
+	
 
 
 
