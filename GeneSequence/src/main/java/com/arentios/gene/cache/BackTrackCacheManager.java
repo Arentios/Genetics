@@ -1,6 +1,7 @@
 package com.arentios.gene.cache;
 
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.Set;
 
 import org.apache.commons.jcs.JCS;
@@ -21,7 +22,7 @@ public class BackTrackCacheManager {
 	
 	private static final String BACKTRACK_CACHE = "backTrackCache";
 	
-	private static CacheAccess<Integer, ArrayList<BackTrackData>> backtrackCache;
+	private static CacheAccess<Integer, LinkedList<BackTrackData>> backtrackCache;
 	private static Logger LOGGER = LoggerFactory.getLogger(BackTrackCacheManager.class);
 	private static BackTrackCacheManager instance;
 	private static Integer currentIndex = 0;
@@ -38,10 +39,11 @@ public class BackTrackCacheManager {
 		return instance;
 	}
 	
-	public boolean putBackTrackData(ArrayList<BackTrackData> data){
+	public boolean putBackTrackData(LinkedList<BackTrackData> data){
 		try{
+			LOGGER.info("Adding data with size="+data.size()+" with id="+currentIndex);
 			backtrackCache.put(currentIndex, data);
-			currentIndex++;
+			currentIndex = currentIndex+1;
 		}catch(Exception e){
 			LOGGER.error(e.getMessage());
 			return false;
@@ -49,9 +51,11 @@ public class BackTrackCacheManager {
 		return true;
 	}
 	
-	public ArrayList<BackTrackData> getBackTrackData(Integer id){
+	public LinkedList<BackTrackData> getBackTrackData(Integer id){
 		try{
-			ArrayList<BackTrackData> data = backtrackCache.get(id);
+			//Back track information can only be retrieved once, then it's removed from the cache
+			LinkedList<BackTrackData> data = backtrackCache.get(id);
+			LOGGER.info("Retrieved data with id="+id+" and size="+data.size());
 			backtrackCache.remove(id);
 			return data;
 		}catch(Exception e){
@@ -72,6 +76,22 @@ public class BackTrackCacheManager {
 			results.add((Integer) o);
 		}	
 		return results;
+		
+		
+	}
+	
+	/**
+	 * Return the first key from the cache for cases where processing order isn't important and we just want to grab something
+	 * @return
+	 */
+	public Integer getKey(){
+		Set<Object> rawKeys = CompositeCacheManager.getInstance().getCache(BACKTRACK_CACHE).getMemoryCache().getKeySet();
+		for(Object o : rawKeys){
+			return (Integer) o;
+		}
+		//If no keys, return nothing
+		return null;
+		
 		
 		
 	}

@@ -81,16 +81,14 @@ public class SmithWaterman extends DynamicProgrammingSequencer {
 			}
 		}
 
-		/*
+		
 		for(Cell currCell : maxScores){
-			ArrayList<SequenceAlignment> currAlignments = backTrack(currCell, new ArrayList<Character>(), new ArrayList<Character>(), firstSequence, secondSequence, match, indel, mismatch);
+			ArrayList<SequenceAlignment> currAlignments = backTrack(currCell, firstSequence, secondSequence);
 			for(SequenceAlignment alignment : currAlignments){
 				results.add(alignment);
 			}
 		}
-		*/
-		results = backTrack(new LinkedList<Cell>(maxScores), firstSequence, secondSequence, match, indel, mismatch);
-
+		
 		return results;
 	}
 

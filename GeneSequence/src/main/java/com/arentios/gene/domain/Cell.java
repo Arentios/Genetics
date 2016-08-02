@@ -15,15 +15,18 @@ public class Cell {
 	private Integer score;
 	private int i;
 	private int j;
+	private boolean gap;
 	
 	public Cell(){
 		this.score = 0;
+		this.gap = false;
 	}
 	
 	public Cell(Integer score, int i, int j){
 		this.score = score;
 		this.i = i;
 		this.j = j;
+		this.gap = false;
 	}
 	
 
@@ -64,6 +67,14 @@ public class Cell {
 
 	public void setJ(int j) {
 		this.j = j;
+	}
+
+	public boolean isGap() {
+		return gap;
+	}
+
+	public void setGap(boolean gap) {
+		this.gap = gap;
 	}
 	
 	
