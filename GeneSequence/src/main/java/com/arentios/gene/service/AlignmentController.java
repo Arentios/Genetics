@@ -17,8 +17,10 @@ import org.springframework.web.bind.annotation.RestController;
 import com.arentios.gene.domain.Sequence;
 import com.arentios.gene.domain.SequenceAlignment;
 import com.arentios.gene.sequence.NeedlemanWunsch;
+import com.arentios.gene.sequence.SequenceConstants;
 import com.arentios.gene.sequence.SmithWaterman;
 import com.arentios.gene.service.domain.AlignmentRequest;
+import com.arentios.gene.service.domain.RequestOption;
 
 /**
  * Controller for RESTful services accessing person data
@@ -37,7 +39,7 @@ public class AlignmentController {
 	public ResponseEntity<String> needlemanWunsch(@PathVariable String sequenceOne, @PathVariable String sequenceTwo){
 		LOGGER.info("Attempting to run Needleman-Wunsch with default scoring on "+sequenceOne+" and " + sequenceTwo);
 		try{
-			ArrayList<SequenceAlignment> alignments = NeedlemanWunsch.sequence(new Sequence(sequenceOne), new Sequence(sequenceTwo));
+			ArrayList<SequenceAlignment> alignments = NeedlemanWunsch.sequence(new Sequence(sequenceOne), new Sequence(sequenceTwo), SequenceConstants.SINGLE_TRACK_DEFAULT);
 			StringBuffer results = new StringBuffer();
 			for(SequenceAlignment alignment : alignments){
 				results.append(alignment);
@@ -83,7 +85,14 @@ public class AlignmentController {
 					return ResponseEntity.status(HttpStatus.NO_CONTENT).body("Need exactly two sequences to run Needleman-Wunsch");
 				}
 				LOGGER.info("Attempting to process Needleman-Wunsch post request with sequences="+request.getSequences()[0]+","+request.getSequences()[1]);
-				ArrayList<SequenceAlignment> alignments = NeedlemanWunsch.sequence(new Sequence(request.getSequences()[0]), new Sequence(request.getSequences()[1]));
+				boolean singleTrack = SequenceConstants.SINGLE_TRACK_DEFAULT;
+				for(RequestOption option : request.getOptions()){
+					LOGGER.info("Got option="+option.getOption()+ " with value="+option.getValue());
+					if(option.getOption().equalsIgnoreCase(("SingleTrack"))){
+						singleTrack = Boolean.parseBoolean(option.getValue());
+					}
+				}
+				ArrayList<SequenceAlignment> alignments = NeedlemanWunsch.sequence(new Sequence(request.getSequences()[0]), new Sequence(request.getSequences()[1]), singleTrack);
 				StringBuffer results = new StringBuffer();
 				for(SequenceAlignment alignment : alignments){
 					results.append(alignment);

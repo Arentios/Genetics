@@ -111,6 +111,7 @@ public class DynamicProgrammingSequencer {
 						resultSequence.setSequence(data.getSequenceTwo());
 						sequencedPair.addSequence(resultSequence);
 						results.add(sequencedPair);
+						maxMatches = matches;
 					}
 
 				}
@@ -130,7 +131,7 @@ public class DynamicProgrammingSequencer {
 		catch(Exception e){
 			e.printStackTrace();
 		}		
-		LOGGER.info("Finished back track, total number of sequences calculated="+possibleSequences);
+		LOGGER.info("Finished back track, total number of sequences calculated="+possibleSequences+" and maxMatches="+maxMatches);
 		return results;
 	}
 
@@ -150,6 +151,61 @@ public class DynamicProgrammingSequencer {
 			}
 		}
 		return match;
+	}
+
+
+	/**
+	 * Single path based solution to backtracking
+	 * This will only ever consider a single path through backtracking, making it much faster than the queue based approach but less valuable in terms of results
+	 * @param cellToProcess
+	 * @param firstSequence
+	 * @param secondSequence
+	 * @return
+	 */
+	protected static SequenceAlignment backTrackNonBranching(Cell cellToProcess,ArrayList<Character> firstSequence, ArrayList<Character> secondSequence){
+
+		try{
+			ArrayList<Character> sequenceOne = new ArrayList<Character>();
+			ArrayList<Character> sequenceTwo = new ArrayList<Character>();
+			LinkedList<Cell> parents = cellToProcess.getParents();
+			while(parents != null){
+				//Since this back track is blind, just take the first parent from the list
+				Cell parent = parents.get(0);
+				//Need to figure out which character to add to each sequence
+				if(parent.getI() != cellToProcess.getI()){
+					//Diagonal movement
+					if(parent.getJ() != cellToProcess.getJ()){
+						sequenceOne.add(0,firstSequence.get(parent.getI()));
+						sequenceTwo.add(0,secondSequence.get(parent.getJ()));
+					}
+					//Leftwards movement
+					else{
+						sequenceOne.add(0,firstSequence.get(parent.getI()));
+						sequenceTwo.add(0,'-');
+					}
+				}
+				//Upwards movement by default
+				else{
+					sequenceOne.add(0,'-');
+					sequenceTwo.add(0,secondSequence.get(parent.getJ()));
+				}
+				cellToProcess = parent;
+				parents = cellToProcess.getParents();
+			}
+			//If there are no parents we're at the terminus, return the result
+			SequenceAlignment sequencedPair = new SequenceAlignment();
+			Sequence resultSequence = new Sequence();
+			resultSequence.setSequence(sequenceOne);
+			sequencedPair.addSequence(resultSequence);
+			resultSequence = new Sequence();
+			resultSequence.setSequence(sequenceTwo);
+			sequencedPair.addSequence(resultSequence);
+			return sequencedPair;
+		}
+		catch(Exception e){
+			e.printStackTrace();
+		}		
+		return null;
 	}
 
 }

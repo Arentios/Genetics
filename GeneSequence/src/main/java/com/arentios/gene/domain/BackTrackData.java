@@ -1,5 +1,6 @@
 package com.arentios.gene.domain;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
 /**
@@ -7,7 +8,11 @@ import java.util.ArrayList;
  * @author Arentios
  *
  */
-public class BackTrackData {
+public class BackTrackData implements Serializable {
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 6993121983200739327L;
 	private Cell cell;
 	private ArrayList<Character> sequenceOne;
 	private ArrayList<Character> sequenceTwo;

@@ -1,6 +1,7 @@
 package com.arentios.gene.domain;
 
 
+import java.io.Serializable;
 import java.util.LinkedList;
 
 /**
@@ -8,9 +9,13 @@ import java.util.LinkedList;
  * @author Arentios
  *
  */
-public class Cell {
+public class Cell implements Serializable {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 95331134073804026L;
 	private LinkedList<Cell> parents = null;
 	private Integer score;
 	private int i;

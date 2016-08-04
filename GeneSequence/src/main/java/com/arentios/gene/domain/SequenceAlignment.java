@@ -62,4 +62,8 @@ public class SequenceAlignment {
 		return true;
 	}
 
+	public ArrayList<Sequence> getSequencedGenes() {
+		return sequencedGenes;
+	}
+
 }
