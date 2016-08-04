@@ -92,7 +92,6 @@ public class AlignmentController {
 						singleTrack = Boolean.parseBoolean(option.getValue());
 					}
 				}
-				System.out.println(singleTrack);
 				ArrayList<SequenceAlignment> alignments = NeedlemanWunsch.sequence(new Sequence(request.getSequences()[0]), new Sequence(request.getSequences()[1]), singleTrack);
 				StringBuffer results = new StringBuffer();
 				for(SequenceAlignment alignment : alignments){
