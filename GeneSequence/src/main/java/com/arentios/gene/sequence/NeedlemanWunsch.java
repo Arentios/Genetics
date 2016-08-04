@@ -20,8 +20,8 @@ public class NeedlemanWunsch extends DynamicProgrammingSequencer {
 	 * @param secondSequence
 	 * @return
 	 */
-	public static ArrayList<SequenceAlignment> sequence(Sequence firstSequence, Sequence secondSequence){
-		return sequence(firstSequence, secondSequence, SequenceConstants.NEEDLEMAN_WUNSCH_MATCH_DEFAULT, SequenceConstants.NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT, SequenceConstants.NEEDLEMAN_WUNSCH_GAP_OPEN_DEFAULT, SequenceConstants.NEEDLEMAN_WUNSCH_GAP_EXTEND_DEFAULT);
+	public static ArrayList<SequenceAlignment> sequence(Sequence firstSequence, Sequence secondSequence, boolean singlePath){
+		return sequence(firstSequence, secondSequence, SequenceConstants.NEEDLEMAN_WUNSCH_MATCH_DEFAULT, SequenceConstants.NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT, SequenceConstants.NEEDLEMAN_WUNSCH_GAP_OPEN_DEFAULT, SequenceConstants.NEEDLEMAN_WUNSCH_GAP_EXTEND_DEFAULT, singlePath);
 	}
 
 
@@ -37,7 +37,7 @@ public class NeedlemanWunsch extends DynamicProgrammingSequencer {
 	 * @param mismatch
 	 * @return
 	 */
-	public static ArrayList<SequenceAlignment> sequence(Sequence firstGeneSequence, Sequence secondGeneSequence, Integer match, Integer mismatch, Integer gapOpen, Integer gapExtend){
+	public static ArrayList<SequenceAlignment> sequence(Sequence firstGeneSequence, Sequence secondGeneSequence, Integer match, Integer mismatch, Integer gapOpen, Integer gapExtend, boolean singlePath){
 		ArrayList<SequenceAlignment> results = new ArrayList<SequenceAlignment>();
 		ArrayList<Character> firstSequence = firstGeneSequence.getSequence();
 		ArrayList<Character> secondSequence = secondGeneSequence.getSequence();
@@ -77,26 +77,27 @@ public class NeedlemanWunsch extends DynamicProgrammingSequencer {
 				int maxScore = Math.max(upScore, leftScore);
 				maxScore = Math.max(maxScore, diagonalScore);
 				scoringMatrix[i][j] = new Cell(maxScore, i, j);
+				if(diagonalScore == maxScore){
+					scoringMatrix[i][j].addParent(scoringMatrix[i-1][j-1]);
+				}
 				if(upScore == maxScore){
 					scoringMatrix[i][j].addParent(scoringMatrix[i][j-1]);
 				}
 				if(leftScore == maxScore){
 					scoringMatrix[i][j].addParent(scoringMatrix[i-1][j]);
 				}
-				if(diagonalScore == maxScore){
-					scoringMatrix[i][j].addParent(scoringMatrix[i-1][j-1]);
-				}
+				
 			}
 		}
-		//for(int i=0;i<scoringMatrix.length;i++){
-		//			for(int j=0;j<scoringMatrix[i].length;j++){
-		//				System.out.print(scoringMatrix[i][j].getScore() + " ");
-		//			}
-		//			System.out.println();
-		//		}
+
 		//Now, backtrack to find optimal sequence
 		//NW always runs from the bottom right of the scoring matrix
-		results = backTrack(scoringMatrix[scoringMatrix.length-1][scoringMatrix[0].length-1], firstSequence, secondSequence);
+		if(singlePath==true){
+			results.add(backTrackNonBranching(scoringMatrix[scoringMatrix.length-1][scoringMatrix[0].length-1], firstSequence, secondSequence));
+		}
+		else{
+			results = backTrack(scoringMatrix[scoringMatrix.length-1][scoringMatrix[0].length-1], firstSequence, secondSequence);
+		}
 		return results;
 
 	}

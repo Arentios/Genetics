@@ -13,5 +13,7 @@ public class SequenceConstants {
 	
 	public static final int BACKTRACK_MAX_SIZE = 10000;
 	
+	public static final boolean SINGLE_TRACK_DEFAULT = true;
+	
 	
 }

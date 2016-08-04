@@ -22,24 +22,35 @@ public class AlignmentTest
 
 
 	@Test
-	public void testNeedlemanWunsch()
+	public void testNeedlemanWunschBranching()
 	{
-		Sequence firstSequence = new Sequence("MPAVYG");
-		Sequence secondSequence = new Sequence("MPAFYG");	
+		Sequence firstSequence = new Sequence("gcggcaggcttaacacatgcaagtcgaggggtatatgtcttcggata");
+		Sequence secondSequence = new Sequence("gcggcgtgcttaacacatgcaagtcgaacgatgacccggtgcttgca");	
 		
-		ArrayList<SequenceAlignment> sequencedGenes = NeedlemanWunsch.sequence(firstSequence, secondSequence, TestConstants.NEEDLEMAN_WUNSCH_MATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_INDEL_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT);
+		ArrayList<SequenceAlignment> sequencedGenes = NeedlemanWunsch.sequence(firstSequence, secondSequence, TestConstants.NEEDLEMAN_WUNSCH_MATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_GAP_OPEN_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_GAP_EXTEND_DEFAULT, false);
 		ArrayList<SequenceAlignment> testAlignment = new ArrayList<SequenceAlignment>();
 		ArrayList<Sequence> testSequences = new ArrayList<Sequence>();
-		testSequences.add(new Sequence("MPAV-YG"));
-		testSequences.add(new Sequence("MPA-FYG"));
+		testSequences.add(new Sequence("gcggcaggcttaacacatgcaagtcgaggggt-a-tatgt-cttcggata"));
+		testSequences.add(new Sequence("gcggcgtgcttaacacatgcaagtcgaacgatgacccggtgctt--g-ca"));
 		testAlignment.add(new SequenceAlignment(testSequences));
-		testSequences = new ArrayList<Sequence>();
-		testSequences.add(new Sequence("MPA-VYG"));
-		testSequences.add(new Sequence("MPAF-YG"));
-		testAlignment.add(new SequenceAlignment(testSequences));
-		testSequences = new ArrayList<Sequence>();
-		testSequences.add(new Sequence("MPAVYG"));
-		testSequences.add(new Sequence("MPAFYG"));
+		assertTrue(sequencedGenes != null && (sequencedGenes.size() == testAlignment.size()));
+		for(int i=0;i<sequencedGenes.size();i++){
+			assertTrue( sequencedGenes.get(i).equals(testAlignment.get(i)) );
+		}
+		
+	}
+	
+	@Test
+	public void testNeedlemanWunschSingle()
+	{
+		Sequence firstSequence = new Sequence("gcggcaggcttaacacatgcaagtcgaggggtatatgtcttcggata");
+		Sequence secondSequence = new Sequence("gcggcgtgcttaacacatgcaagtcgaacgatgacccggtgcttgca");	
+		
+		ArrayList<SequenceAlignment> sequencedGenes = NeedlemanWunsch.sequence(firstSequence, secondSequence, TestConstants.NEEDLEMAN_WUNSCH_MATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_GAP_OPEN_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_GAP_EXTEND_DEFAULT, true);
+		ArrayList<SequenceAlignment> testAlignment = new ArrayList<SequenceAlignment>();
+		ArrayList<Sequence> testSequences = new ArrayList<Sequence>();
+		testSequences.add(new Sequence("gcggcaggcttaacacatgcaagtcgaggggt-a-tatgt-cttcggata"));
+		testSequences.add(new Sequence("gcggcgtgcttaacacatgcaagtcgaacgatgacccggtgctt--g-ca"));
 		testAlignment.add(new SequenceAlignment(testSequences));
 		assertTrue(sequencedGenes != null && (sequencedGenes.size() == testAlignment.size()));
 		for(int i=0;i<sequencedGenes.size();i++){
@@ -49,13 +60,13 @@ public class AlignmentTest
 	}
 	@Test
 	public void testSmithWaterman(){
-		Sequence firstSequence = new Sequence("MPAVYGARL");
-		Sequence secondSequence = new Sequence("MPAFYGG");
+		Sequence firstSequence = new Sequence("gcggcaggcttaacacatgcaagtcgaggggtatatgtcttcggata");
+		Sequence secondSequence = new Sequence("gcggcgtgcttaacacatgcaagtcgaacgatgacccggtgcttgca");
 		ArrayList<SequenceAlignment> sequencedGenes = SmithWaterman.sequence(firstSequence, secondSequence, TestConstants.SMITH_WATERMAN_MATCH_DEFAULT, TestConstants.SMITH_WATERMAN_INDEL_DEFAULT, TestConstants.SMITH_WATERMAN_MISMATCH_DEFAULT);
 		ArrayList<SequenceAlignment> testAlignment = new ArrayList<SequenceAlignment>();
 		ArrayList<Sequence> testSequences = new ArrayList<Sequence>();
-		testSequences.add(new Sequence("MPAVYG"));
-		testSequences.add(new Sequence("MPAFYG"));
+		testSequences.add(new Sequence("gcggcag-gcttaacacatgcaagtcgaggggtat-a---tgt-cttcgga"));
+		testSequences.add(new Sequence("gcggc-gtgcttaacacatgcaagtcga-acg-atgacccggtgctt-gca"));
 		testAlignment.add(new SequenceAlignment(testSequences));
 		assertTrue(sequencedGenes != null && (sequencedGenes.size() == testAlignment.size()));
 		for(int i=0;i<sequencedGenes.size();i++){

@@ -9,6 +9,7 @@ public class AlignmentRequest {
 
 	private String requestType;
 	private String[] sequences;
+	private RequestOption[] options;
 	
 	public String getRequestType() {
 		return requestType;
@@ -22,5 +23,12 @@ public class AlignmentRequest {
 	public void setSequences(String[] sequences) {
 		this.sequences = sequences;
 	}
+	public RequestOption[] getOptions() {
+		return options;
+	}
+	public void setOptions(RequestOption[] options) {
+		this.options = options;
+	}
+	
 	
 }
