@@ -24,6 +24,6 @@ if __name__ == '__main__':
                     symbol = pattern.match(substr).group(1)
                 else:
                     if len(substr) > 0:
-                        print('matrix.addSubstitutionMatrixValue("'+keys[y]+'","'+symbol+'",'+pattern.match(substr).group(1)+');' )
+                        print('matrix.addSubstitutionMatrixValue(\''+keys[y]+'\',\''+symbol+'\',\''+pattern.match(substr).group(1)+'\');')
                 y+=1
         x+=1

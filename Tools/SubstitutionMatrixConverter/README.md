@@ -5,7 +5,7 @@ Simple Python script to take in a tsv file representing a substitution matrix an
 Very messy, should probably be in Java to allow for direct serialization of generated matrix
 
 Usage
-'python converter.py <filename>'
+'python converter.py filename'
 
 Sample using provided matrix file:
 'python converter.py pam250raw.tsv'
