@@ -29,6 +29,7 @@ public class AlignmentRequest {
 	public void setOptions(RequestOption[] options) {
 		this.options = options;
 	}
+
 	
 	
 }
