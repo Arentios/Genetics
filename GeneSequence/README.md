@@ -11,11 +11,11 @@ NYI: Matching more than two sequences at a time. This is a major problem in the 
 
 Sample service calls, assuming running locally on port 8080
 
-http://localhost:8080/GeneSequence/alignment/needlemanwunsch/MPAVYGARLTTFED/MPAFYGGKLTTFEDX #Runs Needleman-Wunsch global alignment algorithm on two specified sequences
+http://localhost:8080/GeneSequence/alignment/needlemanwunsch/gcggcaggcttaacaca/gcggcgtgcttaacaca #Runs Needleman-Wunsch global alignment algorithm on two specified sequences
 
-http://localhost:8080/GeneSequence/alignment/smithwaterman/MPAVYUTR/MPAFYGRTB #Runs Smith-Waterman local alignment algorithm on two specified sequences
+http://localhost:8080/GeneSequence/alignment/smithwaterman/gcggcaggcttaacaca/gcggcgtgcttaacaca #Runs Smith-Waterman local alignment algorithm on two specified sequences
 
-http://localhost:8080/GeneSequence/alignment/ #Does an alignment using data specified in message body, tracking back through all possible optimal scores to find the best alignment
+http://localhost:8080/GeneSequence/alignment/dna #Does an alignment on DNA sequences using data specified in message body, tracking back through all possible optimal scores to find the best alignment
 
 Sample Body using data taken from the NIH Nucleotide Database http://www.ncbi.nlm.nih.gov/nuccore
 

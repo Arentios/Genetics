@@ -17,17 +17,17 @@ public class Cell implements Serializable {
 	 */
 	private static final long serialVersionUID = 95331134073804026L;
 	private LinkedList<Cell> parents = null;
-	private Integer score;
+	private Double score;
 	private int i;
 	private int j;
 	private boolean gap;
 	
 	public Cell(){
-		this.score = 0;
+		this.score = 0.0;
 		this.gap = false;
 	}
 	
-	public Cell(Integer score, int i, int j){
+	public Cell(Double score, int i, int j){
 		this.score = score;
 		this.i = i;
 		this.j = j;
@@ -36,10 +36,10 @@ public class Cell implements Serializable {
 	
 
 	
-	public Integer getScore() {
+	public Double getScore() {
 		return score;
 	}
-	public void setScore(Integer score) {
+	public void setScore(Double score) {
 		this.score = score;
 	}
 
