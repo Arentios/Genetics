@@ -1,7 +1,6 @@
 package com.arentios.gene.genesequence;
 
 import org.junit.Test;
-import org.springframework.core.io.ClassPathResource;
 
 import com.arentios.gene.domain.Sequence;
 import com.arentios.gene.domain.SequenceAlignment;
@@ -12,13 +11,10 @@ import com.arentios.gene.service.AlignmentSystemTools;
 
 import static org.junit.Assert.*;
 
-import java.io.File;
+
 import java.util.ArrayList;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+
 
 
 /**
@@ -35,37 +31,43 @@ public class AlignmentTest
 	{
 		Sequence firstSequence = new Sequence("gcggcaggcttaacacatgcaagtcgaggggtatatgtcttcggata");
 		Sequence secondSequence = new Sequence("gcggcgtgcttaacacatgcaagtcgaacgatgacccggtgcttgca");	
-		
-		ArrayList<SequenceAlignment> sequencedGenes = NeedlemanWunsch.sequence(firstSequence, secondSequence, TestConstants.NEEDLEMAN_WUNSCH_MATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_GAP_OPEN_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_GAP_EXTEND_DEFAULT, false, null);
-		ArrayList<SequenceAlignment> testAlignment = new ArrayList<SequenceAlignment>();
-		ArrayList<Sequence> testSequences = new ArrayList<Sequence>();
-		testSequences.add(new Sequence("gcggcaggcttaacacatgcaagtcgaggggt-a-tatgt-cttcggata"));
-		testSequences.add(new Sequence("gcggcgtgcttaacacatgcaagtcgaacgatgacccggtgctt--g-ca"));
-		testAlignment.add(new SequenceAlignment(testSequences));
-		assertTrue(sequencedGenes != null && (sequencedGenes.size() == testAlignment.size()));
-		for(int i=0;i<sequencedGenes.size();i++){
-			assertTrue( sequencedGenes.get(i).equals(testAlignment.get(i)) );
+		try{
+			ArrayList<SequenceAlignment> sequencedGenes = NeedlemanWunsch.sequence(firstSequence, secondSequence, TestConstants.NEEDLEMAN_WUNSCH_MATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_GAP_OPEN_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_GAP_EXTEND_DEFAULT, false, null);
+			ArrayList<SequenceAlignment> testAlignment = new ArrayList<SequenceAlignment>();
+			ArrayList<Sequence> testSequences = new ArrayList<Sequence>();
+			testSequences.add(new Sequence("gcggcaggcttaacacatgcaagtcgaggggt-a-tatgt-cttcggata"));
+			testSequences.add(new Sequence("gcggcgtgcttaacacatgcaagtcgaacgatgacccggtgctt--g-ca"));
+			testAlignment.add(new SequenceAlignment(testSequences));
+			assertTrue(sequencedGenes != null && (sequencedGenes.size() == testAlignment.size()));
+			for(int i=0;i<sequencedGenes.size();i++){
+				assertTrue( sequencedGenes.get(i).equals(testAlignment.get(i)) );
+			}
+		}catch(Exception e){
+			assertTrue(false);
 		}
-		
+
 	}
-	
+
 	@Test
 	public void testNeedlemanWunschSingle()
 	{
 		Sequence firstSequence = new Sequence("gcggcaggcttaacacatgcaagtcgaggggtatatgtcttcggata");
 		Sequence secondSequence = new Sequence("gcggcgtgcttaacacatgcaagtcgaacgatgacccggtgcttgca");	
-		
-		ArrayList<SequenceAlignment> sequencedGenes = NeedlemanWunsch.sequence(firstSequence, secondSequence, TestConstants.NEEDLEMAN_WUNSCH_MATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_GAP_OPEN_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_GAP_EXTEND_DEFAULT, true, null);
-		ArrayList<SequenceAlignment> testAlignment = new ArrayList<SequenceAlignment>();
-		ArrayList<Sequence> testSequences = new ArrayList<Sequence>();
-		testSequences.add(new Sequence("gcggcaggcttaacacatgcaagtcgaggggt-a-tatgt-cttcggata"));
-		testSequences.add(new Sequence("gcggcgtgcttaacacatgcaagtcgaacgatgacccggtgctt--g-ca"));
-		testAlignment.add(new SequenceAlignment(testSequences));
-		assertTrue(sequencedGenes != null && (sequencedGenes.size() == testAlignment.size()));
-		for(int i=0;i<sequencedGenes.size();i++){
-			assertTrue( sequencedGenes.get(i).equals(testAlignment.get(i)) );
+		try{
+			ArrayList<SequenceAlignment> sequencedGenes = NeedlemanWunsch.sequence(firstSequence, secondSequence, TestConstants.NEEDLEMAN_WUNSCH_MATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_GAP_OPEN_DEFAULT, TestConstants.NEEDLEMAN_WUNSCH_GAP_EXTEND_DEFAULT, true, null);
+			ArrayList<SequenceAlignment> testAlignment = new ArrayList<SequenceAlignment>();
+			ArrayList<Sequence> testSequences = new ArrayList<Sequence>();
+			testSequences.add(new Sequence("gcggcaggcttaacacatgcaagtcgaggggt-a-tatgt-cttcggata"));
+			testSequences.add(new Sequence("gcggcgtgcttaacacatgcaagtcgaacgatgacccggtgctt--g-ca"));
+			testAlignment.add(new SequenceAlignment(testSequences));
+			assertTrue(sequencedGenes != null && (sequencedGenes.size() == testAlignment.size()));
+			for(int i=0;i<sequencedGenes.size();i++){
+				assertTrue( sequencedGenes.get(i).equals(testAlignment.get(i)) );
+			}
+		}catch(Exception e){
+			assertTrue(false);
 		}
-		
+
 	}
 	@Test
 	public void testSmithWaterman(){
@@ -82,11 +84,37 @@ public class AlignmentTest
 			assertTrue( sequencedGenes.get(i).equals(testAlignment.get(i)) );
 		}
 	}
-	
+
 	@Test
 	public void testLoadScoringMatrix(){
 		SubstitutionMatrix matrix = AlignmentSystemTools.loadSubstitutionMatrix("pam250.xml");
-		assertTrue(matrix.lookupSubstitutionValue('V', 'N') == -2);
+		
+		try{
+			assertTrue(matrix.lookupSubstitutionValue('V', 'N') == -2);
+		}catch(Exception e){
+			assertTrue(false);
+		}
 	}
+
+	@Test
+	public void testSaveScoringMatrix(){
+		SubstitutionMatrix matrix = new SubstitutionMatrix();
+		matrix.addSubstitutionMatrixValue('A','A',4);
+		matrix.addSubstitutionMatrixValue('R','A',-1);
+		matrix.addSubstitutionMatrixValue('N','A',-2);
+		matrix.addSubstitutionMatrixValue('D','A',-2);
+		matrix.addSubstitutionMatrixValue('C','A',0);
+		matrix.addSubstitutionMatrixValue('Q','A',-1);
+		matrix.addSubstitutionMatrixValue('E','A',-1);
+		matrix.addSubstitutionMatrixValue('G','A',0);
+		matrix.addSubstitutionMatrixValue('H','A',-2);
+		matrix.addSubstitutionMatrixValue('I','A',-1);
+		matrix.addSubstitutionMatrixValue('L','A',-1);
+		matrix.addSubstitutionMatrixValue('K','A',-1);
+		matrix.addSubstitutionMatrixValue('M','A',-1);
+		AlignmentSystemTools.serializeSubstitutionMatrix("test", matrix);
+		
+	}
+
 
 }

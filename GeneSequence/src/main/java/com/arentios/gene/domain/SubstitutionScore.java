@@ -1,6 +1,7 @@
 package com.arentios.gene.domain;
 
 import java.util.HashMap;
+import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -26,6 +27,10 @@ public class SubstitutionScore{
 
 	public Integer lookupSubstitutionScore(Character key){
 		return substitutionScore.get(key);
+	}
+	
+	public Set<Character> getCharacterSet(){
+		return substitutionScore.keySet();
 	}
 
 }

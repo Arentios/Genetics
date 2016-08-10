@@ -18,7 +18,6 @@ import com.arentios.gene.domain.Sequence;
 import com.arentios.gene.domain.SequenceAlignment;
 import com.arentios.gene.domain.SubstitutionMatrix;
 import com.arentios.gene.sequence.NeedlemanWunsch;
-import com.arentios.gene.sequence.SequenceConstants;
 import com.arentios.gene.sequence.SmithWaterman;
 import com.arentios.gene.service.domain.AlignmentRequest;
 import com.arentios.gene.service.domain.RequestOption;
@@ -147,13 +146,13 @@ public class AlignmentController {
 					substitutionMatrix = ServiceConstants.DEFAULT_SUBSTITUTION_MATRIX;
 				}
 				try{
-				SubstitutionMatrix matrix = AlignmentSystemTools.loadSubstitutionMatrix(ServiceConstants.MATRIX_FILE_PATH+substitutionMatrix+".xml");
-				ArrayList<SequenceAlignment> alignments = NeedlemanWunsch.sequenceProtein(new Sequence(request.getSequences()[0]), new Sequence(request.getSequences()[1]), singleTrack, matrix);
-				StringBuffer results = new StringBuffer();
-				for(SequenceAlignment alignment : alignments){
-					results.append(alignment);
-				}
-				return ResponseEntity.status(HttpStatus.OK).body(results.toString());
+					SubstitutionMatrix matrix = AlignmentSystemTools.loadSubstitutionMatrix(ServiceConstants.MATRIX_FILE_PATH+substitutionMatrix+".xml");
+					ArrayList<SequenceAlignment> alignments = NeedlemanWunsch.sequenceProtein(new Sequence(request.getSequences()[0]), new Sequence(request.getSequences()[1]), singleTrack, matrix);
+					StringBuffer results = new StringBuffer();
+					for(SequenceAlignment alignment : alignments){
+						results.append(alignment);
+					}
+					return ResponseEntity.status(HttpStatus.OK).body(results.toString());
 				} catch(Exception e){
 					e.printStackTrace();
 				}

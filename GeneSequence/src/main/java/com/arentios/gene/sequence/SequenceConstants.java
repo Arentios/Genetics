@@ -15,6 +15,8 @@ public class SequenceConstants {
 	
 	public static final int BACKTRACK_MAX_SIZE = 10000;
 	
+	public static final char WILD_CARD_CHARACTER = '*';
+	
 	
 	
 	
