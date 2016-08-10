@@ -13,7 +13,7 @@ if __name__ == '__main__':
     keys = []
     for line in filecontents:
         if(x == 0):
-            keys = line.split('\t')          
+            keys = line.split('\t')
         else:
             split = line.split('\t')
             pattern = re.compile('(\-?[A-Z|0-9]+)')
@@ -24,6 +24,6 @@ if __name__ == '__main__':
                     symbol = pattern.match(substr).group(1)
                 else:
                     if len(substr) > 0:
-                        print('matrix.addSubstitutionMatrixValue(\''+keys[y]+'\',\''+symbol+'\',\''+pattern.match(substr).group(1)+'\');')
+                        print('matrix.addSubstitutionMatrixValue(\''+keys[y].strip('\r\n')+'\',\''+symbol+'\','+pattern.match(substr).group(1)+');')
                 y+=1
         x+=1
