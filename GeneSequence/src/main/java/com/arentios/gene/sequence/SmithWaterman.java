@@ -1,7 +1,6 @@
 package com.arentios.gene.sequence;
 
 import java.util.ArrayList;
-import java.util.LinkedList;
 
 import com.arentios.gene.domain.Cell;
 import com.arentios.gene.domain.Sequence;

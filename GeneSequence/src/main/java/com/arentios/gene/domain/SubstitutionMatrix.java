@@ -4,6 +4,8 @@ import java.util.HashMap;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
+import com.arentios.gene.sequence.SequenceConstants;
+
 
 /**
  * Class to represent a substitution matrix, used to represent the likelihood of one symbol becoming another
@@ -52,13 +54,34 @@ public class SubstitutionMatrix {
 	 * @param key1
 	 * @param key2
 	 * @return
+	 * @throws Exception 
 	 */
-	public Integer lookupSubstitutionValue(Character key1, Character key2){
+	public Integer lookupSubstitutionValue(Character key1, Character key2) throws Exception{
 		SubstitutionScore subMatrix = substitutionMatrix.get(key1);
 		if(subMatrix==null){
-			return null;
+			subMatrix = substitutionMatrix.get(SequenceConstants.WILD_CARD_CHARACTER);
+			if(subMatrix == null){
+				throw new Exception("Failed to find value in matrix for key1="+key1+", key2="+key2);
+			}
 		}
-		return subMatrix.lookupSubstitutionScore(key2);
+		Integer value = subMatrix.lookupSubstitutionScore(key2);
+		return value;
 	}
+
+
+
+	/**
+	 * Test function to print out a matrix's contents to system output
+	 */
+	public void printMatrix() {
+		for(Character c : substitutionMatrix.keySet()){
+			for(Character e : substitutionMatrix.get(c).getCharacterSet()){
+				System.out.println(c + " " + e + " " + substitutionMatrix.get(c).lookupSubstitutionScore(e));
+			}
+		}
+		
+	}
+	
+	
 
 }

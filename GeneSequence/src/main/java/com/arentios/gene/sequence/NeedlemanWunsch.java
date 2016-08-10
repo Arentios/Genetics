@@ -19,12 +19,13 @@ public class NeedlemanWunsch extends DynamicProgrammingSequencer {
 	 * @param firstSequence
 	 * @param secondSequence
 	 * @return
+	 * @throws Exception 
 	 */
-	public static ArrayList<SequenceAlignment> sequenceDNA(Sequence firstSequence, Sequence secondSequence, boolean singlePath, SubstitutionMatrix matrix){
+	public static ArrayList<SequenceAlignment> sequenceDNA(Sequence firstSequence, Sequence secondSequence, boolean singlePath, SubstitutionMatrix matrix) throws Exception{
 		return sequence(firstSequence, secondSequence, SequenceConstants.DNA_NEEDLEMAN_WUNSCH_MATCH_DEFAULT, SequenceConstants.DNA_NEEDLEMAN_WUNSCH_MISMATCH_DEFAULT, SequenceConstants.DNA_NEEDLEMAN_WUNSCH_GAP_OPEN_DEFAULT, SequenceConstants.DNA_NEEDLEMAN_WUNSCH_GAP_EXTEND_DEFAULT, singlePath, matrix);
 	}
 
-	public static ArrayList<SequenceAlignment> sequenceProtein(Sequence firstSequence, Sequence secondSequence, boolean singlePath, SubstitutionMatrix matrix){
+	public static ArrayList<SequenceAlignment> sequenceProtein(Sequence firstSequence, Sequence secondSequence, boolean singlePath, SubstitutionMatrix matrix) throws Exception{
 		return sequence(firstSequence, secondSequence, 0, 0, SequenceConstants.PROTEIN_NEEDLEMAN_WUNSCH_GAP_OPEN_DEFAULT, SequenceConstants.PROTEIN_NEEDLEMAN_WUNSCH_GAP_EXTEND_DEFAULT, singlePath, matrix);
 	}
 
@@ -41,8 +42,9 @@ public class NeedlemanWunsch extends DynamicProgrammingSequencer {
 	 * @param gapExtend
 	 * @param mismatch
 	 * @return
+	 * @throws Exception 
 	 */
-	public static ArrayList<SequenceAlignment> sequence(Sequence firstGeneSequence, Sequence secondGeneSequence, double match, double mismatch, double gapOpen, double gapExtend, boolean singlePath, SubstitutionMatrix matrix){
+	public static ArrayList<SequenceAlignment> sequence(Sequence firstGeneSequence, Sequence secondGeneSequence, double match, double mismatch, double gapOpen, double gapExtend, boolean singlePath, SubstitutionMatrix matrix) throws Exception{
 		ArrayList<SequenceAlignment> results = new ArrayList<SequenceAlignment>();
 		ArrayList<Character> firstSequence = firstGeneSequence.getSequence();
 		ArrayList<Character> secondSequence = secondGeneSequence.getSequence();
