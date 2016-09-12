@@ -35,6 +35,12 @@ public class AlignmentController {
 	@Autowired
 	private static Logger LOGGER = LoggerFactory.getLogger(AlignmentController.class);
 
+	/**
+	 * Simple Needleman-Wunsch alignment on sequences passed in via URL
+	 * @param sequenceOne
+	 * @param sequenceTwo
+	 * @return
+	 */
 	@RequestMapping(value = "/needlemanwunsch/{sequenceOne}/{sequenceTwo}", method = RequestMethod.GET)
 	public ResponseEntity<String> needlemanWunsch(@PathVariable String sequenceOne, @PathVariable String sequenceTwo){
 		LOGGER.info("Attempting to run Needleman-Wunsch with default scoring on "+sequenceOne+" and " + sequenceTwo);
@@ -54,6 +60,12 @@ public class AlignmentController {
 
 	}
 
+	/**
+	 * Simple Smith-Waterman alignment on sequences passed in via URL
+	 * @param sequenceOne
+	 * @param sequenceTwo
+	 * @return
+	 */
 	@RequestMapping(value = "/smithwaterman/{sequenceOne}/{sequenceTwo}", method = RequestMethod.GET)
 	public ResponseEntity<String> smithWaterman(@PathVariable String sequenceOne, @PathVariable String sequenceTwo){
 		LOGGER.info("Attempting to run Smith-Waterman with default scoring on "+sequenceOne+" and " + sequenceTwo);
@@ -76,6 +88,11 @@ public class AlignmentController {
 	}
 
 
+	/**
+	 * Request to perform sequence alignment on a pair of DNA sequences using sequences and options passed in via request body
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/dna", method = RequestMethod.POST)
 	public ResponseEntity<String> RequestDNAAlignment(@RequestBody AlignmentRequest request){
 		LOGGER.info("Attempting to DNA process alignment request");
@@ -121,6 +138,11 @@ public class AlignmentController {
 
 	}
 
+	/**
+	 * Request to perform sequence alignment on a pair of protein sequences using sequences and options passed in via request body
+	 * @param request
+	 * @return
+	 */
 	@RequestMapping(value = "/protein", method = RequestMethod.POST)
 	public ResponseEntity<String> RequestProteinAlignment(@RequestBody AlignmentRequest request){
 		LOGGER.info("Attempting to process protein alignment request");
