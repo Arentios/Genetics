@@ -112,8 +112,12 @@ public class AlignmentTest
 		matrix.addSubstitutionMatrixValue('L','A',-1);
 		matrix.addSubstitutionMatrixValue('K','A',-1);
 		matrix.addSubstitutionMatrixValue('M','A',-1);
-		AlignmentSystemTools.serializeSubstitutionMatrix("test", matrix);
-		
+		try{
+			AlignmentSystemTools.serializeSubstitutionMatrix("test", matrix);
+		}
+		catch(Exception e){
+			assertTrue(false);
+		}
 	}
 
 
