@@ -1,0 +1,163 @@
+GBBCT125.SEQ        Genetic Sequence Data Bank
+                            June 15 2016
+
+                NCBI-GenBank Flat File Release 214.0
+
+                     Bacterial Sequences (Part 125)
+
+      14 loci,    40535154 bases, from       14 reported sequences
+
+
+LOCUS       CP008910             3236215 bp    DNA     circular BCT 01-DEC-2014
+DEFINITION  Burkholderia pseudomallei MSHR5848 chromosome 2, complete sequence.
+ACCESSION   CP008910
+VERSION     CP008910.1  GI:685760464
+DBLINK      BioProject: PRJNA244424
+            BioSample: SAMN02902465
+KEYWORDS    .
+SOURCE      Burkholderia pseudomallei MSHR5848
+  ORGANISM  Burkholderia pseudomallei MSHR5848
+            Bacteria; Proteobacteria; Betaproteobacteria; Burkholderiales;
+            Burkholderiaceae; Burkholderia; pseudomallei group.
+REFERENCE   1  (bases 1 to 3236215)
+  AUTHORS   Daligault,H.E., Davenport,K.W., Minogue,T.D., Bishop-Lilly,K.A.,
+            Broomall,S.M., Bruce,D.C., Chain,P.S., Coyne,S.R., Frey,K.G.,
+            Gibbons,H.S., Jaissle,J., Koroleva,G.I., Ladner,J.T., Lo,C.C.,
+            Munk,C., Palacios,G.F., Redden,C.L., Rosenzweig,C.N., Scholz,M.B.
+            and Johnson,S.L.
+  TITLE     Whole-Genome Assemblies of 56 Burkholderia Species
+  JOURNAL   Genome Announc 2 (6) (2014)
+   PUBMED   25414490
+  REMARK    Publication Status: Online-Only
+REFERENCE   2  (bases 1 to 3236215)
+  AUTHORS   Bishop-Lilly,K.A., Broomall,S.M., Chain,P.S., Chertkov,O.,
+            Coyne,S.R., Daligault,H.E., Davenport,K.W., Erkkila,T., Frey,K.G.,
+            Gibbons,H.S., Gu,W., Jaissle,J., Johnson,S.L., Koroleva,G.I.,
+            Ladner,J.T., Lo,C.-C., Minogue,T.D., Munk,C., Palacios,G.F.,
+            Redden,C.L., Rosenzweig,C.N., Scholz,M.B., Teshima,H. and Xu,Y.
+  TITLE     Direct Submission
+  JOURNAL   Submitted (08-JUL-2014) Bioscience, Los Alamos National Laboratory,
+            P.O. Box 1663, MS M888, Los Alamos, NM 87545, USA
+COMMENT     The DNA was obtained from USAMRIID. The authors would like to thank
+            Drs Mark May and Bart Currie for providing the original strain.
+            
+            ##Genome-Assembly-Data-START##
+            Assembly Date         :: 16-OCT-2013
+            Assembly Method       :: Newbler v. 2.6; Velvet v. 1.2.08; Allpaths
+                                     v. 44837; Phrap v. SPS - 4.24
+            Genome Coverage       :: 193x
+            Sequencing Technology :: Illumina; 454; PacBio
+            ##Genome-Assembly-Data-END##
+FEATURES             Location/Qualifiers
+     source          1..3236215
+                     /organism="Burkholderia pseudomallei MSHR5848"
+                     /mol_type="genomic DNA"
+                     /strain="MSHR5848"
+                     /isolation_source="sputum"
+                     /host="Homo sapiens"
+                     /db_xref="taxon:1306420"
+                     /chromosome="2"
+                     /country="Australia"
+                     /collection_date="2011-01-01"
+     gene            54..341
+                     /locus_tag="DP65_3552"
+     CDS             54..341
+                     /locus_tag="DP65_3552"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="sulfur transport family protein"
+                     /protein_id="AIP43529.1"
+                     /db_xref="GI:685762363"
+                     /translation="MAGAIAVGSIAFAFAKRRERSLLGLPMQIPPRGAVTPRLVAGSA
+                     AFGVGWGLVGFCPGPAVVSLGLGGAKAFGFVAAMLIGMAAFECGERFRAKR"
+     gene            559..945
+                     /locus_tag="DP65_3553"
+     CDS             559..945
+                     /locus_tag="DP65_3553"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="acetyltransferase domain protein"
+                     /protein_id="AIP41801.1"
+                     /db_xref="GI:685760635"
+                     /translation="MREGEARLRASGTQAVFGALTDDGGLIGIAGVRREALVQLAHKA
+                     VLWGVFVAPAHRGNGLARRLIDAALTHASRDWGVEQVNLCVNTENEPAKALYASLGFE
+                     TFGVERRAMRVGDRFYDEQHMVRGRR"
+     gene            complement(1276..1488)
+                     /locus_tag="DP65_3554"
+     CDS             complement(1276..1488)
+                     /locus_tag="DP65_3554"
+                     /note="conserved hypothetical protein"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="hypothetical protein"
+                     /protein_id="AIP43609.1"
+                     /db_xref="GI:685762443"
+                     /translation="MAKKFPLHPKHPERNCWGCDRYCSVDALSCGNGSDRTQHPIELL
+                     GDDWYEWEQENEAAQQPIQSVPAAVR"
+     gene            complement(1849..2121)
+                     /locus_tag="DP65_3555"
+     CDS             complement(1849..2121)
+                     /locus_tag="DP65_3555"
+                     /note="conserved hypothetical protein"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="hypothetical protein"
+                     /protein_id="AIP41738.1"
+                     /db_xref="GI:685760572"
+                     /translation="MEHLVRIVNDTDRQILAWLRSQVGDERVERAAQHMGRVRKPYLS
+                     AVCRYLGVWPPISLRYPPRHGAVDHAVGDRYLTLIRQHLAAHTAGR"
+     gene            complement(2810..3670)
+                     /locus_tag="DP65_3556"
+     CDS             complement(2810..3670)
+                     /locus_tag="DP65_3556"
+                     /note="methyltransferase, TIGR00027 family protein;
+                     mthyl_TIGR00027: methyltransferase, TIGR00027 family
+                     protein"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="methyltransferase, family protein"
+                     /protein_id="AIP43549.1"
+                     /db_xref="GI:685762383"
+                     /translation="MSNQSIGAPDSTAVRVALWRALHARIDAPPHVLDDEIGLALAAP
+                     DDDWRSRPDMDPQASRGYRASIVGRARFVEDLVDEQADRGVAQYVVLGAGLDTFAQRR
+                     AKLASHLRVFEIDQPGTQAWKRQRLIALGYGVPQWLRLVPVDFETSGAWRAQLSAAGF
+                     DDSRPAVVSSTGVSMYLTREAIADTLSQIATLAPGSTLAMTFLLPLELIDDPAERAQH
+                     AAVYERARAAGTPFVSFFSPSDMLALAREAGFREARHVSTDDLVRRYFESRPDGLRPA
+                     SGEAFLVAST"
+     gene            complement(3849..5471)
+                     /locus_tag="DP65_3557"
+     CDS             complement(3849..5471)
+                     /locus_tag="DP65_3557"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="cytochrome c family protein"
+                     /protein_id="AIP43274.1"
+                     /db_xref="GI:685762108"
+                     /translation="MTGGKRSGAARRAGAAFAARGPALAGAPGARNARRIVSTLAIAA
+                     VTRAAGGALAACASAIAFASGAAAPGALDAVRAAYPASSLSPARTPGAGGAAHVKPVQ
+                     EALRAKAASPSPSLLPSPSSPTTSLLPGAPPQRVVATIGRGTPQVASKVDPTAAAFHP
+                     DPALAALGKRVFFDPALSEPRGTSCASCHDPGRAFAPTLSRAALAGPRVPQGSRPGHF
+                     SRRNAPSLLYVRYVPRRHFYQDDDALAPAPFGGLFSDGRADTLAEQLRGPLFDPDEMN
+                     NASPAALTRKIGGTALGAALAERFGPSVRRDPERMVRALGEAMQAYLQSDEMAPFSSR
+                     YDAYVMRRAPLTPQEKRGLALFRNPDKGNCMSCHTLSDTASRPERSLFTDFGYDAIAV
+                     PRNRALRANRDPRHFDNGLCDTAAKLRWPEPAQWCGYLRTPGLRNVAIKESFMHNGVF
+                     DTLRDAVAFYNTRSTDPKRWYHGRDTFDDVPAAYRGNINVNSTPMNRRAGTPPAMTDA
+                     DVDDIVAFLRTLTDARYVGLMPAAPDGKAARP"
+     gene            complement(5468..6943)
+                     /locus_tag="DP65_3558"
+     CDS             complement(5468..6943)
+                     /locus_tag="DP65_3558"
+                     /codon_start=1
+                     /transl_table=11
+                     /product="calcineurin-like phosphoesterase family protein"
+                     /protein_id="AIP42337.1"
+                     /db_xref="GI:685761171"
+                     /translation="MPRPILRAAALSLTLAGAALFHACTSSVDNQPDAASAPANIQAA
+                     WVEIGDANQAIARVITNYAPPPAAPGEPAPAVCPQLNADGKIARMTLRVAAGTAAQRP
+                     TASDPADSKPSSFPVSVCETTLPANAKDVSVASRALPLPKAEPQRVAIVADTGCRMKK
+                     ADNAFQACSDATVWPFATIAASIAKLNPDLVLHVGDYHYRENACPPDIAGCRNSPWGY
+                     GWDAWRADLFEPAAPLLAKAPWVVVRGNHEECARAGQGWFRFLDPRPYSDARSCNDAA
+                     NDGNANYSEPYAVPLGTGSQVIVFDTAKVGRAALKTTDTQFQLYQKQFQTVAALASKP
+                     GMSTTIFTNHHPILAFAPIPGSTPAPGNLALQSVMSSLYAQAYYPPGVQVALHGHVHD
+                     FQAINFASGHPATIVSGNGGDNLDVALPDPFPANLTPAPGVVIDKLSHNNSFGFLIME
+                     RRAAPARGWTFKAYTAAGKLLASCDQAGATLTCDKTGFVAP"
