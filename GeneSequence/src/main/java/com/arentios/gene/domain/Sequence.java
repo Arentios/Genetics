@@ -60,6 +60,18 @@ public class Sequence {
 		}
 		return false;
 	}
+
+	@Override
+	/**
+	 * Convert the sequence to a string
+	 */
+	public String toString() {
+		StringBuilder build = new StringBuilder();
+		for(Character c : sequence){
+			build.append(c);
+		}
+		return build.toString();
+	}
 	
 
 

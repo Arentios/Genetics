@@ -73,6 +73,12 @@
 			<version>2.7.0</version>
 		</dependency>
 
+		<dependency>
+			<groupId>exercises</groupId>
+			<artifactId>Exercises</artifactId>
+			<version>0.0.1-SNAPSHOT</version>
+		</dependency>
+
 
 
 	</dependencies>

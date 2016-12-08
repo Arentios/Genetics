@@ -1,6 +1,9 @@
 package com.arentios.gene.domain;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import com.arentios.data.datatypes.Searchable;
 
 /**
  * Class to hold a list of sequenced genes
@@ -8,7 +11,7 @@ import java.util.ArrayList;
  * @author Arentios
  *
  */
-public class SequenceAlignment {
+public class SequenceAlignment extends Searchable {
 
 
 	ArrayList<Sequence> sequencedGenes;
@@ -64,6 +67,20 @@ public class SequenceAlignment {
 
 	public ArrayList<Sequence> getSequencedGenes() {
 		return sequencedGenes;
+	}
+
+	
+
+	@Override
+	/**
+	 * Return the search keys for a sequence alignment, which are in turn the aligned sequences
+	 */
+	public List<String> getSearchKeys() {
+		List<String> keys = new ArrayList<String>();
+		for(Sequence sequence : sequencedGenes){
+			keys.add(new String(sequence.toString()));
+		}
+		return keys;
 	}
 
 }

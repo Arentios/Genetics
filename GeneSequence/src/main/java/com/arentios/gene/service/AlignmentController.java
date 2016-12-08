@@ -146,6 +146,7 @@ public class AlignmentController {
 	@RequestMapping(value = "/protein", method = RequestMethod.POST)
 	public ResponseEntity<String> RequestProteinAlignment(@RequestBody AlignmentRequest request){
 		LOGGER.info("Attempting to process protein alignment request");
+		LOGGER.info(request.getRequestType());
 		try{
 			if(request.getRequestType().equalsIgnoreCase("Needleman-Wunsch")){
 				if(request.getSequences().length != 2){
